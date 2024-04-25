@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./data/db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example_root_password
+      MYSQL_DATABASE: redmine
+      MYSQL_USER: redmine
+      MYSQL_PASSWORD: example_redmine_password
+
+  redmine:
+    image: redmine
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      REDMINE_DB_MYSQL: db
+      REDMINE_DB_DATABASE: redmine
+      REDMINE_DB_USERNAME: redmine
+      REDMINE_DB_PASSWORD: example_redmine_password
+    volumes:
+      - ./data/redmine_files:/usr/src/redmine/files
+      - ./data/redmine_themes:/usr/src/redmine/public/themes
+volumes:
+  db_data:
+  redmine_files:
+  redmine_themes:
