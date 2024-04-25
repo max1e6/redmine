@@ -1,2 +1,2 @@
 # redmine
-Redmine Docker Stack
+A Redmine Docker Stack
